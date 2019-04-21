@@ -40,8 +40,8 @@ $submit.on("click", function (event) {
         console.log(response);
         console.log(response[0].ctid); // MAKE SURE IT'S A CITY
     
+        // make sure it's a city (response returns city and airport codes)
         $.each(response, function (i, value) {
-            // make sure it's a city
             if (response[i].loctype === "city") {
                 console.log("this is a city")
                 console.log(i + ", " + value)
@@ -50,8 +50,6 @@ $submit.on("click", function (event) {
                 return false;
             }
         });
-
-        // citycode = response[0].ctid;
 
 
         // now that we have the location code, we can use it to find hotels
@@ -74,11 +72,14 @@ $submit.on("click", function (event) {
             console.log(response.hotelset[0].thumburl);
             console.log(response);
 
+            // reference for hotel list
             var hotelList = response.hotelset;
 
             // go through each hotel and show on page
             $.each(hotelList, function (i, value) {
                 console.log("hotel " + i)
+
+                // get relevent info
                 var hotelName = response.hotelset[i].brand;
                 var cheapestProviderName = response.hotelset[i].cheapestProvider.name;
                 var bestPrice = response.hotelset[i].cheapestProvider.displaybaseprice;
@@ -101,7 +102,7 @@ $submit.on("click", function (event) {
                 // make parent div for this hotel
                 var newHotelDiv = $("<div>").append(newTitle, newAddress, newPrice, newRating, newImage, newLink);
 
-
+                // add this hotel's div to the hotel container
                 $hotelsContainer.append(newHotelDiv);
 
             });
