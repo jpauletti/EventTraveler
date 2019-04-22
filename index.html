@@ -70,9 +70,11 @@
         </ul>
       </div>
       <div>
+          <h1>Search multiple travel sites</h1>
+      <!-- Create the form -->
         <form id="event-form">
-          <label for="event-input">Search for event!</label>
-          <input type="text" id="event-input" /><br />
+          <!-- <label for="event-input">Search for event!</label>
+          <input type="text" id="event-input" /><br /> -->
           <label for="location-input">Enter city and state</label>
           <input type="text" id="location-input" /><br />
           <label for="start-date-input">Check In</label>
@@ -80,47 +82,48 @@
           <label for="end-date-input">Check Out</label>
           <input type="date" id="end-date-input" /><br />
           <!-- Button triggers new movie to be added -->
-          <input id="add-event" class="btn btn-info" type="submit" value="Submit" />
+          <input id="add-event" class="btn btn-info" type="submit" value="Search" />
         </form>
         
-        <div class="row">
-          <div class="col s6 m7" id = "left">
-            <h2 class="header">Horizontal Card</h2>
-              <div class="card horizontal">
-                <div class="card-image">
-                  <img src="https://lorempixel.com/100/190/nature/6">
-                </div>
-              <div class="card-stacked">
-                <div class="card-content">
-                  <p>I am a very simple card. I am good at containing small bits of information.</p>
-                </div>
+        <h2>Fun Images</h2>
+<!-- create cards -->
+      <div class="row">
+        <div class="col s6" id = "right">
+          <h3 class="header">Hotels</h3>
+          <div class="card horizontal">
+            <div class="card-image">
+              <img src="https://lorempixel.com/100/190/nature/6">
+            </div>
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>Address</p>
+              </div>
               <div class="card-action">
-                <a href="#">This is a link</a>
+                <a href="#">Link</a>
               </div>
-          </div>
-        </div>
-
-
-        <div class="row">
-          <div class="col s6 m7" id="right">
-            <h2 class="header" >Horizontal Card</h2>
-              <div class="card horizontal">
-               <div class="card-image">
-                <img src="https://lorempixel.com/100/190/nature/6">
-                </div>
-              <div class="card-stacked">
-                <div class="card-content">
-                  <p>I am a very simple card. I am good at containing small bits of information.</p>
-                </div>
-                <div class="card-action">
-                  <a href="#">This is a link</a>
-                </div>
-              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col s6" id = "Left">
+          <h3 class="header">Events</h3>
+          <div class="card horizontal">
+            <div class="card-image">
+              <img src="https://lorempixel.com/100/190/nature/6">
+            </div>
+            <div class="card-stacked">
+              <div class="card-content">
+                  <p>Address</p>
+              </div>
+              <div class="card-action">
+                <a href="#">Link</a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
    
 </body>
 </html>

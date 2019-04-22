@@ -1,9 +1,21 @@
-/* #right{
-    float: left;
+#right{
+    float: right;
     display: inline-block;
+    /* width: 250px; */
 
 }
 #left{
-    float: right;
+    top: 10%;
+    /* width: 230px; */
     display: inline;
-} */
+}
+.event-form{
+    width: 250px;
+    border: 5px solid gray;
+}
+.slides{
+    margin : 50px;
+}
+.row .col .s6{
+    top: 20%;
+}
