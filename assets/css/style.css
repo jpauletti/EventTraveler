@@ -1,24 +1,29 @@
 body{
     background:#fbe9e7;
 }
+
 #right{
 
     width: 230px;
 
 }
+
 #left{
     top: 10%;
-  
 }
+
 #event-form{
     width: 350px;
     border: 1px solid rgb(209, 144, 144);
     color: black;
     
 }
+
 .slides{
     margin : 50px;
 }
+
 #trips{
     width: 50px;
+
 }
