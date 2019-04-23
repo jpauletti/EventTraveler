@@ -5,14 +5,14 @@ jQuery.ajaxPrefilter(function(options) {
   });
   
   function displayEvent() {
-    $("#display").empty();
+    $("#events-result").empty();
   
     var where = $("#location-input")
       .val()
       .trim();
-    var what = $("#event-input")
-      .val()
-      .trim();
+    //var what = $("#event-input")
+      //.val()
+      //.trim();
     var start = moment($("#start-date-input").val()).format("YYYYMMDD00");
     var end = moment($("#end-date-input").val()).format("YYYYMMDD00");
   
@@ -22,8 +22,6 @@ jQuery.ajaxPrefilter(function(options) {
       "app_key=n69CWBNZRrGZqdMs" +
       "&l=" +
       where +
-      "&q=" +
-      what +
       "&t=" +
       start +
       "-" +
@@ -39,27 +37,27 @@ jQuery.ajaxPrefilter(function(options) {
       var schema = JSON.parse(response);
       console.log(schema.events);
       for (var i = 0; i < schema.events.event.length; i++) {
-        //$("#display").append("<div>")
+        //$("#event-result").append("<div>")
         //$("<div>").addID("event" + i)
         total = parseFloat(i) + 1;
   
-        $("#display").append("<h1>" + schema.events.event[i].title + "</h1>");
+        $("#events-result").append("<h1>" + schema.events.event[i].title + "</h1>");
         if (schema.events.event[i].image !== null) {
           var image = schema.events.event[i].image.medium.url;
           if (image.includes("http")) {
-            $("#display").append("<img src='" + image + "'/>");
+            $("#events-result").append("<img src='" + image + "'/>");
           } else {
-            $("#display").append("<img src='https:" + image + "'/>");
+            $("#events-result").append("<img src='https:" + image + "'/>");
           }
         } else {
-          $("#display").append(
-            "<img src= 'https://www.metrorollerdoors.com.au/wp-content/uploads/2018/02/unavailable-image.jpg' />"
+          $("#events-result").append(
+            "<img style='height: 128' src= 'https://www.metrorollerdoors.com.au/wp-content/uploads/2018/02/unavailable-image.jpg' />"
           );
         }
   
-        $("#display").append("<a href=" + schema.events.event[i].url + "></a>");
-        $("#display").append("<p>" + schema.events.event[i].start_time + "</p>");
-        $("#display").append("<p>" + schema.events.event[i].postal_code + "</p>");
+        $("#events-result").append("<a href=" + schema.events.event[i].url + "></a>");
+        $("#events-result").append("<p>" + schema.events.event[i].start_time + "</p>");
+        $("#events-result").append("<p>" + schema.events.event[i].venue_address + ", " +schema.events.event[i].city_name + ", " + schema.events.event[i].postal_code + "</p>");
       }
     });
   }
