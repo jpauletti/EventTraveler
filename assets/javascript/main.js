@@ -8,33 +8,13 @@ var $checkInDate = $("#start-date-input");
 var $checkOutDate = $("#end-date-input");
 var $submit = $("#add-event");
 
+// make global variable so functions can access
+var city = "";
+var checkin = "";
+var checkout = "";
+var pleaseWait = "";
 
-
-$submit.on("click", function (event) {
-    event.preventDefault();
-
-    // clear out current results
-    $hotelsContainer.empty();
-
-    // save their inputted data
-    var city = $city.val().trim();
-    var checkin = $checkInDate.val();
-    var checkout = $checkOutDate.val();
-    console.log(checkin, checkout);
-    var citycode = "";
-
-    // clear inputs
-    $city.val("");
-    $checkInDate.val("");
-    $checkOutDate.val("");
-
-    // show message that results are being generated - so user knows button did submit
-    if ($(".please-wait").length === 0) {
-        var pleaseWait = $("<p>").text("Searching for results...").addClass("please-wait");
-        $(document.body).append(pleaseWait);
-        pleaseWait.insertAfter($submit);
-    }
-
+function getHotels() {
 
     // find location code
     $.ajax({
@@ -85,7 +65,9 @@ $submit.on("click", function (event) {
 
             // if no results
             if (hotelList.length === 0) {
-                var newP = $("<p>").text("No results.").appendAfter("#Left > h3");
+                console.log("no results");
+                var newP = $("<p>").text("No results.");
+                $hotelsContainer.append(newP);
             }
 
             // go through each hotel and show on page
@@ -106,7 +88,7 @@ $submit.on("click", function (event) {
                 } else {
                     var cheapestProviderName = response.hotelset[i].brand;
                     var bestPrice = response.hotelset[i].price;
-                    var linkToHotel = "https://kayak.com" + response.hotelset[i].shareURL; 
+                    var linkToHotel = "https://kayak.com" + response.hotelset[i].shareURL;
                 }
 
                 //create elements for html
@@ -143,6 +125,38 @@ $submit.on("click", function (event) {
 
 
     });
+
+}
+
+
+
+$submit.on("click", function (event) {
+    event.preventDefault();
+
+    // clear out current results
+    $hotelsContainer.empty();
+
+    // save their inputted data
+    city = $city.val().trim();
+    checkin = $checkInDate.val();
+    checkout = $checkOutDate.val();
+    var citycode = "";
+
+    // clear inputs
+    $city.val("");
+    $checkInDate.val("");
+    $checkOutDate.val("");
+
+    // show message that results are being generated - so user knows button did submit
+    if ($(".please-wait").length === 0) {
+        console.log("results are generating....please wait");
+        pleaseWait = $("<p>").text("Searching for results...").addClass("please-wait");
+        $(document.body).append(pleaseWait);
+        pleaseWait.insertAfter($submit);
+    }
+
+    // get hotel results and display them
+    getHotels();
 
 
 });
