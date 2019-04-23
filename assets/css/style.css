@@ -1,21 +1,29 @@
+body{
+    background:#fbe9e7;
+}
+
 #right{
-    float: right;
-    display: inline-block;
-    /* width: 250px; */
+
+    width: 230px;
 
 }
+
 #left{
     top: 10%;
-    /* width: 230px; */
-    display: inline;
 }
-.event-form{
-    width: 250px;
-    border: 5px solid gray;
+
+#event-form{
+    width: 350px;
+    border: 1px solid rgb(209, 144, 144);
+    color: black;
+    
 }
+
 .slides{
     margin : 50px;
 }
-.row .col .s6{
-    top: 20%;
+
+#trips{
+    width: 50px;
+
 }
