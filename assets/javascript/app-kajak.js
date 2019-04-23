@@ -20,12 +20,20 @@ $submit.on("click", function (event) {
     var city = $city.val().trim();
     var checkin = $checkInDate.val();
     var checkout = $checkOutDate.val();
+    console.log(checkin, checkout);
     var citycode = "";
 
     // clear inputs
     $city.val("");
     $checkInDate.val("");
     $checkOutDate.val("");
+
+    // show message that results are being generated - so user knows button did submit
+    if ($(".please-wait").length === 0) {
+        var pleaseWait = $("<p>").text("Searching for results...").addClass("please-wait");
+        $(document.body).append(pleaseWait);
+        pleaseWait.insertAfter($submit);
+    }
 
 
     // find location code
@@ -39,7 +47,7 @@ $submit.on("click", function (event) {
     }).then(function (response) {
         console.log(response);
         console.log(response[0].ctid); // MAKE SURE IT'S A CITY
-    
+
         // make sure it's a city (response returns city and airport codes)
         $.each(response, function (i, value) {
             if (response[i].loctype === "city") {
@@ -54,7 +62,7 @@ $submit.on("click", function (event) {
 
         // now that we have the location code, we can use it to find hotels
         $.ajax({
-            url: "https://apidojo-kayak-v1.p.rapidapi.com/hotels/create-session?rooms=1&citycode=" + citycode + "&checkin=2019-4-22&checkout=2019-4-24&adults=1",
+            url: "https://apidojo-kayak-v1.p.rapidapi.com/hotels/create-session?rooms=1&citycode=" + citycode + "&checkin=" + checkin + "&checkout=" + checkout + "&adults=1",
             method: "GET",
             headers: {
                 "X-RapidAPI-Host": "apidojo-kayak-v1.p.rapidapi.com",
@@ -62,9 +70,23 @@ $submit.on("click", function (event) {
             }
         }).then(function (response) {
             console.log("kajak success");
+            console.log(response);
+            console.log(response.hotelset);
 
             // reference for hotel list
+            var hotelListMain = response.hotelset;
             var hotelList = response.hotelset;
+            // only keep 10 results
+            if (hotelList.length > 10) {
+                hotelList.length = 10;
+            }
+
+            console.log(hotelList);
+
+            // if no results
+            if (hotelList.length === 0) {
+                var newP = $("<p>").text("No results.").appendAfter("#Left > h3");
+            }
 
             // go through each hotel and show on page
             $.each(hotelList, function (i, value) {
@@ -72,15 +94,20 @@ $submit.on("click", function (event) {
 
                 // get relevent info
                 var hotelName = response.hotelset[i].brand;
-                var cheapestProviderName = response.hotelset[i].cheapestProvider.name;
-                var bestPrice = response.hotelset[i].cheapestProvider.displaybaseprice;
-
-
-                var linkToHotel = "https://kayak.com" + response.hotelset[i].cheapestProvider.url;
                 var hotelAddress = response.hotelset[i].displayaddress;
-                var hotelPrice = response.hotelset[i].price;
                 var hotelRating = response.hotelset[i].ratinglabel;
                 var hotelThumbnail = "https://kayak.com" + response.hotelset[i].thumburl;
+
+                // if cheapest provider object is included
+                if (response.hotelset[i].cheapestProvider !== undefined) {
+                    var cheapestProviderName = response.hotelset[i].cheapestProvider.name;
+                    var bestPrice = response.hotelset[i].cheapestProvider.displaybaseprice;
+                    var linkToHotel = "https://kayak.com" + response.hotelset[i].cheapestProvider.url;
+                } else {
+                    var cheapestProviderName = response.hotelset[i].brand;
+                    var bestPrice = response.hotelset[i].price;
+                    var linkToHotel = "https://kayak.com" + response.hotelset[i].shareURL; 
+                }
 
                 //create elements for html
                 var newTitle = $("<h5>").text(hotelName + " (via " + cheapestProviderName + ")");
@@ -106,9 +133,12 @@ $submit.on("click", function (event) {
                 // add this hotel's div to the hotel container
                 $hotelsContainer.append(newHotelDiv);
 
+                // remove wait message
+                pleaseWait.remove();
+
             });
 
-        
+
         });
 
 
