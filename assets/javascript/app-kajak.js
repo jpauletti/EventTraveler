@@ -1,12 +1,12 @@
 var apikey = "811b0b509bmshf44ab7ab1214e55p19e182jsnc61a98a0c578";
 
-var $hotelsContainer = $("#hotels");
+var $hotelsContainer = $("#hotel-results");
 
 // input fields
-var $city = $("#city");
-var $checkInDate = $("#checkInDate");
-var $checkOutDate = $("#checkOutDate");
-var $submit = $("#submit");
+var $city = $("#location-input");
+var $checkInDate = $("#start-date-input");
+var $checkOutDate = $("#end-date-input");
+var $submit = $("#add-event");
 
 
 
@@ -61,16 +61,7 @@ $submit.on("click", function (event) {
                 "X-RapidAPI-Key": "811b0b509bmshf44ab7ab1214e55p19e182jsnc61a98a0c578"
             }
         }).then(function (response) {
-            console.log("success");
-            console.log(response.hotelset);
-            console.log(response.hotelset[0].brand);
-            console.log(response.hotelset[0].displayaddress);
-            console.log(response.hotelset[0].baseprice);
-            console.log(response.hotelset[0].price);
-            console.log("rating: " + response.hotelset[0].ratinglabel);
-            console.log("kayak.com" + response.hotelset[0].thumburl);
-            console.log(response.hotelset[0].thumburl);
-            console.log(response);
+            console.log("kajak success");
 
             // reference for hotel list
             var hotelList = response.hotelset;
@@ -92,15 +83,25 @@ $submit.on("click", function (event) {
                 var hotelThumbnail = "https://kayak.com" + response.hotelset[i].thumburl;
 
                 //create elements for html
-                var newTitle = $("<h3>").text(hotelName + " (via " + cheapestProviderName + ")");
+                var newTitle = $("<h5>").text(hotelName + " (via " + cheapestProviderName + ")");
                 var newAddress = $("<p>").text(hotelAddress);
                 var newPrice = $("<p>").text(bestPrice);
                 var newRating = $("<p>").text(hotelRating);
                 var newImage = $("<img>").attr("src", hotelThumbnail);
                 var newLink = $("<a>").attr("href", linkToHotel).text("click here");
 
+                // img container
+                var imgContainer = $("<div>").addClass("card-image").append(newImage);
+
+                var content = $("<div>").addClass("card-content").append(newTitle, newAddress, newPrice, newRating);
+                var action = $("<div>").addClass("card-action").append(newLink);
+
+                // content container
+                var allContentContainer = $("<div>").addClass("card-stacked").append(content, action);
+
                 // make parent div for this hotel
-                var newHotelDiv = $("<div>").append(newTitle, newAddress, newPrice, newRating, newImage, newLink);
+                // var newHotelDiv = $("<div>").append(newTitle, newAddress, newPrice, newRating, newImage, newLink).addClass("card-horizontal");
+                var newHotelDiv = $("<div>").append(imgContainer, allContentContainer).addClass("card horizontal");
 
                 // add this hotel's div to the hotel container
                 $hotelsContainer.append(newHotelDiv);
