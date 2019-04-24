@@ -13,6 +13,7 @@ var checkin = "";
 var checkout = "";
 var pleaseWait = "";
 
+
 // CORS un-blocker for eventful API
 jQuery.ajaxPrefilter(function(options) {
   if (options.crossDomain && jQuery.support.cors) {
@@ -87,7 +88,11 @@ function getHotels() {
         console.log("hotel " + i);
 
         // get relevent info
-        var hotelName = response.hotelset[i].brand;
+        if (response.hotelset[i].brand !== undefined) {
+            var hotelName = response.hotelset[i].brand;
+        } else {
+            var hotelName = response.hotelset[i].name;
+        }
         var hotelAddress = response.hotelset[i].displayaddress;
         var hotelRating = response.hotelset[i].ratinglabel;
         var hotelStarCount = response.hotelset[i].stars;
@@ -95,8 +100,8 @@ function getHotels() {
           "https://kayak.com" + response.hotelset[i].thumburl;
 
         // if cheapest provider object is included
-        console.log(response.hotelset[i].cheapestProvider);
-        console.log(response.hotelset[i].cheapestProvider.name);
+        console.log("t/f: " + response.hotelset[i].cheapestProvider !== undefined);
+
         if (response.hotelset[i].cheapestProvider !== undefined) {
           var cheapestProviderName = response.hotelset[i].cheapestProvider.name;
           var bestPrice =
@@ -150,6 +155,7 @@ function getHotels() {
 
         // remove wait message
         pleaseWait.remove();
+
       });
     });
   });
@@ -255,7 +261,8 @@ function displayEvent() {
 
             // add this event's div to the event container
             $("#events-results").append(newEventDiv);
-        
+
+
         }
 
     })
