@@ -85,7 +85,9 @@ $submit.on("click", function (event) {
 
             // if no results
             if (hotelList.length === 0) {
-                var newP = $("<p>").text("No results.").appendAfter("#Left > h3");
+                console.log("no results");
+                var newP = $("<p>").text("No results.");
+                $hotelsContainer.append(newP);
             }
 
             // go through each hotel and show on page
@@ -96,6 +98,7 @@ $submit.on("click", function (event) {
                 var hotelName = response.hotelset[i].brand;
                 var hotelAddress = response.hotelset[i].displayaddress;
                 var hotelRating = response.hotelset[i].ratinglabel;
+                var hotelStarCount = response.hotelset[i].stars;
                 var hotelThumbnail = "https://kayak.com" + response.hotelset[i].thumburl;
 
                 // if cheapest provider object is included
@@ -113,7 +116,7 @@ $submit.on("click", function (event) {
                 var newTitle = $("<h5>").text(hotelName + " (via " + cheapestProviderName + ")");
                 var newAddress = $("<p>").text(hotelAddress);
                 var newPrice = $("<p>").text(bestPrice);
-                var newRating = $("<p>").text(hotelRating);
+                var newRating = $("<p>").text(hotelRating + ", " + hotelStarCount + " stars");
                 var newImage = $("<img>").attr("src", hotelThumbnail);
                 var newLink = $("<a>").attr("href", linkToHotel).text("see hotel");
 

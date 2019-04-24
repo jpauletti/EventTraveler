@@ -1,4 +1,3 @@
-var apikey = "811b0b509bmshf44ab7ab1214e55p19e182jsnc61a98a0c578";
 
 var $hotelsContainer = $("#hotel-results");
 
@@ -13,6 +12,13 @@ var city = "";
 var checkin = "";
 var checkout = "";
 var pleaseWait = "";
+
+// CORS un-blocker for eventful API
+jQuery.ajaxPrefilter(function (options) {
+    if (options.crossDomain && jQuery.support.cors) {
+        options.url = "https://cors-anywhere.herokuapp.com/" + options.url;
+    }
+});
 
 function getHotels() {
 
@@ -78,9 +84,12 @@ function getHotels() {
                 var hotelName = response.hotelset[i].brand;
                 var hotelAddress = response.hotelset[i].displayaddress;
                 var hotelRating = response.hotelset[i].ratinglabel;
+                var hotelStarCount = response.hotelset[i].stars;
                 var hotelThumbnail = "https://kayak.com" + response.hotelset[i].thumburl;
 
                 // if cheapest provider object is included
+                console.log(response.hotelset[i].cheapestProvider);
+                console.log(response.hotelset[i].cheapestProvider.name);
                 if (response.hotelset[i].cheapestProvider !== undefined) {
                     var cheapestProviderName = response.hotelset[i].cheapestProvider.name;
                     var bestPrice = response.hotelset[i].cheapestProvider.displaybaseprice;
@@ -95,7 +104,7 @@ function getHotels() {
                 var newTitle = $("<h5>").text(hotelName + " (via " + cheapestProviderName + ")");
                 var newAddress = $("<p>").text(hotelAddress);
                 var newPrice = $("<p>").text(bestPrice);
-                var newRating = $("<p>").text(hotelRating);
+                var newRating = $("<p>").text(hotelRating + ", " + hotelStarCount + " stars");
                 var newImage = $("<img>").attr("src", hotelThumbnail);
                 var newLink = $("<a>").attr("href", linkToHotel).text("see hotel");
 
@@ -130,6 +139,109 @@ function getHotels() {
 
 
 
+function displayEvent() {
+    $("#events-results").empty();
+
+    var where = $("#location-input")
+        .val()
+        .trim();
+    //var what = $("#event-input")
+    //.val()
+    //.trim();
+    var start = moment($("#start-date-input").val()).format("YYYYMMDD00");
+    var end = moment($("#end-date-input").val()).format("YYYYMMDD00");
+
+    // search for button name in omdb and show info underneath
+    var queryURL =
+        "https://api.eventful.com/json/events/search?" +
+        "app_key=n69CWBNZRrGZqdMs" +
+        "&l=" +
+        where +
+        "&t=" +
+        start +
+        "-" +
+        end;
+
+    console.log(queryURL);
+
+    // https://api.eventful.com/json/events/search?app_key=n69CWBNZRrGZqdMs&l=dallas,%20TX&q=music
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function (response) {
+        var schema = JSON.parse(response);
+        console.log(schema.events);
+        console.log(schema.events.event);
+        // if no results
+        if (schema.events.event.length === 0) {
+            console.log("no results");
+            var newP = $("<p>").text("No results.");
+            $hotelsContainer.append(newP);
+        }
+
+        for (var i = 0; i < schema.events.event.length; i++) {
+            //$("#event-results").append("<div>")
+            //$("<div>").addID("event" + i)
+            total = parseFloat(i) + 1;
+
+            //create elements for html
+            var eventTitle = $("<h5>").text(schema.events.event[i].title);
+            var eventAddress = $("<p>").text(
+                schema.events.event[i].venue_address +
+                ", " +
+                schema.events.event[i].city_name +
+                ", " +
+                schema.events.event[i].postal_code
+            );
+            var eventLink = $("<a>")
+                .attr("href", schema.events.event[i].url)
+                .text("see event");
+            var startTime = $("<p>").text(schema.events.event[i].start_time);
+
+            // img container
+            if (schema.events.event[i].image !== null) {
+                var image = schema.events.event[i].image.medium.url;
+                if (image.includes("http")) {
+                    var eventImage = $("<div>")
+                        .addClass("card-image")
+                        .append("<img src='" + image + "'/>");
+                } else {
+                    var eventImage = $("<div>")
+                        .addClass("card-image")
+                        .append("<img src='https:" + image + "'/>");
+                }
+            } else {
+                var eventImage = $("<div>")
+                    .addClass("card-image")
+                    .append(
+                        "<img style='width: 128px' src= 'https://www.metrorollerdoors.com.au/wp-content/uploads/2018/02/unavailable-image.jpg' />"
+                    );
+            }
+
+
+            //build container
+            var eventContent = $("<div>").addClass("card-content").append(eventTitle, eventAddress, startTime);
+            var eventAction = $("<div>").addClass("card-action").append(eventLink);
+
+            // content container
+            var eventContentContainer = $("<div>").addClass("card-stacked").append(eventContent, eventAction);
+
+
+            // make parent div for this event
+
+            var newEventDiv = $("<div>").append(eventImage, eventContentContainer).addClass("card horizontal");
+
+            // add this event's div to the event container
+            $("#events-results").append(newEventDiv);
+
+
+
+        }
+    });
+}
+
+
+
 $submit.on("click", function (event) {
     event.preventDefault();
 
@@ -157,6 +269,9 @@ $submit.on("click", function (event) {
 
     // get hotel results and display them
     getHotels();
+
+    // get event results and display them
+    displayEvent();
 
 
 });
