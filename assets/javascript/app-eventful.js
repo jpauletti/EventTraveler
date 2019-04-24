@@ -53,46 +53,50 @@ function displayEvent() {
       var eventLink = $("<a>")
         .attr("href", schema.events.event[i].url)
         .text("see event");
-      var startTime = $("<p>").text(schema.events.event[i].start_time);
 
       // img container
       if (schema.events.event[i].image !== null) {
-        var image = schema.events.event[i].image.medium.url;
-        if (image.includes("http")) {
-          var eventImage= $("<div>")
+        var eventimage = schema.events.event[i].image.medium.url;
+        if (eventimage.includes("http")) {
+          var neweventImage = $("<div>")
             .addClass("card-image")
-            .append("<img src='" + image + "'/>");
+            .append("<img src='" + eventimage + "'/>");
         } else {
-          var eventImage= $("<div>")
+          var neweventImage = $("<div>")
             .addClass("card-image")
-            .append("<img src='https:" + image + "'/>");
-        }
+            .append("<img src='https:" + eventimage + "'/>");
+        }}else{};
+
+      // start time
+      var begins = schema.events.event[i].start_time;
+      var days = schema.events.event[i].all_day;
+      if (begins.includes("00:00:00")) {
+        var startTime = $("<p>").text("days: " + days);
       } else {
-        var eventImage= $("<div>")
-          .addClass("card-image")
-          .append(
-            "<img style='width: 128px' src= 'https://www.metrorollerdoors.com.au/wp-content/uploads/2018/02/unavailable-image.jpg' />"
-          );
+        var startTime = $("<p>").text(begins);
       }
 
-
       //build container
-      var eventContent = $("<div>").addClass("card-content").append(eventTitle, eventAddress, startTime);
-      var eventAction = $("<div>").addClass("card-action").append(eventLink);
+      var eventContent = $("<div>")
+        .addClass("card-content")
+        .append(eventTitle, eventAddress, startTime);
+      var eventAction = $("<div>")
+        .addClass("card-action")
+        .append(eventLink);
 
       // content container
-      var eventContentContainer = $("<div>").addClass("card-stacked").append(eventContent, eventAction);
+      var eventContentContainer = $("<div>")
+        .addClass("card-stacked")
+        .append(eventContent, eventAction);
 
+      // make parent div for this event
 
-// make parent div for this event
-                
-                var newEventDiv = $("<div>").append(eventImage, eventContentContainer).addClass("card horizontal");
+      var newEventDiv = $("<div>")
+        .append(neweventImage, eventContentContainer)
+        .addClass("card horizontal");
 
-                // add this event's div to the event container
-                $("#events-results").append(newEventDiv);
-
-
-
+      // add this event's div to the event container
+      $("#events-results").append(newEventDiv);
     }
   });
 }
