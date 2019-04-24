@@ -1,7 +1,6 @@
 body{
     background:#f8dcd9;
 }
-<<<<<<< HEAD
 #head{
     height: 110px;
  
@@ -10,13 +9,6 @@ body{
    width: 100px;
    height: 100px;
    left: 10px;
-=======
-
-#right{
-
-    width: 230px;
-
->>>>>>> fdb8418d9c8163ebd5ea6defc88d74b7f0e6d8be
 }
 
 #left{
@@ -36,7 +28,6 @@ body{
 
 #trips{
     width: 50px;
-<<<<<<< HEAD
     
 }
 
@@ -58,7 +49,3 @@ footer {
     height: 50px;
     text-align: center;
 }
-=======
-
-}
->>>>>>> fdb8418d9c8163ebd5ea6defc88d74b7f0e6d8be
