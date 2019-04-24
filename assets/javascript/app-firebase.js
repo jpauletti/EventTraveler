@@ -31,26 +31,49 @@
 
    
   // Creates local "temporary" object for holding hotel and event data
-  database.ref().set({
-    eventsearch: searchevent,
-    eventlocation: searcheventlocation,
-    eventdate: eventdate,
-    eventtime: eventtime,
-    hotelsearch: searchotel,
-    hotellocation: searchotelocation,
-    hotelindate: hotelindhotelindateate,
-    hoteloutdate: hoteloutdate
-  });
+    var hotelEventSearch = {
+      eventsearch: searchevent,
+      eventlocation: searcheventlocation,
+      eventdate: eventdate,
+      eventtime: eventtime,
+      hotelsearch: searchotel,
+      hotellocation: searchotelocation,
+      hotelindate: hotelindate,
+      hoteloutdate: hoteloutdate
+    };
+
+    database.ref().push(hotelEventSearch);
+
+      $("#searchevent-input").val("");
+      $("#eventlocation-input").val("");
+      $("#eventdate-input").val("");
+      $("#eventtime-inpu").val("");
+      $("#searchotel-input").val("");
+      $("#hotellocation-inpu").val("");
+      $("#hoteltindate-input").val("");
+      $("#hoteloutdate-input").val("");
+
 
  });
 
-
+  //var recentPostsRef = firebase.database().ref('posts').limitToLast(100);
   //database snapshots of the hotel and event data
-  database.ref().on("value", function(snapshot){
+  //database.ref().on("value", function(snapshot){
+  database.ref().limitToLast(5).on("child_added", function(childSnapshot) {
 
-    var eventdatetPretty = moment.unix(eventdate).format("MM/DD/YYYY");
-    var eventtimePretty = moment.unix(eventtime).format("h:mm:ss a");
-    var hotelindatePretty = moment.unix(hotelindate).format("MM/DD/YYYY");
+    var eventsearch = childSnapshot.val().searchevent;
+    var eventlocation =childSnapshot.val().searcheventlocation;
+    var eventdate = childSnapshot.val().eventdate;
+    var eventtime = childSnapshot.val().eventtime;
+
+    var hotelsearch = childSnapshot.val().searchotel;
+    var hotellocation =childSnapshot.val().searchotelocation;
+    var hotelindate = childSnapshot.val().hotelindate;
+    var hoteloutdate = childSnapshot.val().hoteloutdate;
+
+    var eventdatetPretty   = moment.unix(eventdate).format("MM/DD/YYYY");
+    var eventtimePretty    = moment.unix(eventtime).format("h:mm:ss a");
+    var hotelindatePretty  = moment.unix(hotelindate).format("MM/DD/YYYY");
     var hoteloutdatePretty = moment.unix(hoteloutdate).format("MM/DD/YYYY");
 
 // Create the new event row
