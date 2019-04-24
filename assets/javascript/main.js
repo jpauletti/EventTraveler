@@ -228,9 +228,10 @@ function displayEvent() {
             var begins = schema.events.event[i].start_time;
             var days = schema.events.event[i].all_day;
             if (begins.includes("00:00:00")) {
-                var date = begins.slice(0, 16);
+                var date = begins.slice(0, 10);
                 var startTime = $("<p>").text("Starts on " + date + ". Happening for " + days + " days");
             } else {
+                var date = begins.slice(0, 16);
                 var startTime = $("<p>").text(begins);
             }
 
