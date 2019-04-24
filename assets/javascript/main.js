@@ -156,12 +156,7 @@ function getHotels() {
 }
 
 
-
-
-
-
 function displayEvent() {
-
     $("#events-results").empty();
 
     var where = $("#location-input")
@@ -170,6 +165,7 @@ function displayEvent() {
 
     var start = moment($("#start-date-input").val()).format("YYYYMMDD00");
     var end = moment($("#end-date-input").val()).format("YYYYMMDD00");
+
 
     // search for button name in omdb and show info underneath
     var queryURL =
@@ -232,9 +228,10 @@ function displayEvent() {
             var begins = schema.events.event[i].start_time;
             var days = schema.events.event[i].all_day;
             if (begins.includes("00:00:00")) {
-                var date = begins.splice(11,18);
+                var date = begins.slice(0, 10);
                 var startTime = $("<p>").text("Starts on " + date + ". Happening for " + days + " days");
             } else {
+                var date = begins.slice(0, 16);
                 var startTime = $("<p>").text(begins);
             }
 
