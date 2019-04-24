@@ -278,23 +278,32 @@ $submit.on("click", function (event) {
     checkout = $checkOutDate.val();
     var citycode = "";
 
-    // show message that results are being generated - so user knows button did submit
-    if ($(".please-wait").length === 0) {
-        console.log("results are generating....please wait");
-        pleaseWait = $("<p>").text("Searching for results...").addClass("please-wait");
-        $(document.body).append(pleaseWait);
-        pleaseWait.insertAfter($submit);
+    // if user filled out all fields
+    if (city !== "" && checkin !== "" && checkout !== "") {
+        // show message that results are being generated - so user knows button did submit
+        if ($(".please-wait").length === 0) {
+            console.log("results are generating....please wait");
+            pleaseWait = $("<p>").text("Searching for results...").addClass("please-wait");
+            $(document.body).append(pleaseWait);
+            pleaseWait.insertAfter($submit);
+        }
+
+        // get hotel results and display them
+        getHotels();
+
+        // get event results and display them
+        displayEvent();
+
+        // clear inputs
+        $city.val("");
+        $checkInDate.val("");
+        $checkOutDate.val("");
+    } else {
+        // show error message
+        if ($(".required-error").length === 0) {
+            var required = $("<p>").text("* All fields are required").addClass("required-error");
+            $("#event-form").prepend(required);
+        }
     }
-
-    // get hotel results and display them
-    getHotels();
-
-    // get event results and display them
-    displayEvent();
-
-    // clear inputs
-    $city.val("");
-    $checkInDate.val("");
-    $checkOutDate.val("");
 
 });
