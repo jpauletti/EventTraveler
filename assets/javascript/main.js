@@ -1,4 +1,5 @@
 var $hotelsContainer = $("#hotel-results");
+var $eventsContainer = $("#events-results");
 
 // input fields
 var $city = $("#location-input");
@@ -155,15 +156,19 @@ function getHotels() {
   });
 }
 
+
+
+
+
+
 function displayEvent() {
-  $("#events-results").empty();
+
+    $("#events-results").empty();
 
   var where = $("#location-input")
     .val()
     .trim();
-  //var what = $("#event-input")
-  //.val()
-  //.trim();
+
   var start = moment($("#start-date-input").val()).format("YYYYMMDD00");
   var end = moment($("#end-date-input").val()).format("YYYYMMDD00");
 
@@ -180,7 +185,6 @@ function displayEvent() {
 
   console.log(queryURL);
 
-  // https://api.eventful.com/json/events/search?app_key=n69CWBNZRrGZqdMs&l=dallas,%20TX&q=music
   $.ajax({
     url: queryURL,
     method: "GET"
@@ -192,7 +196,7 @@ function displayEvent() {
     if (schema.events.event.length === 0) {
       console.log("no results");
       var newP = $("<p>").text("No results.");
-      $hotelsContainer.append(newP);
+      $eventsContainer.append(newP);
     }
 
     for (var i = 0; i < schema.events.event.length; i++) {
@@ -223,7 +227,6 @@ function displayEvent() {
             .addClass("card-image")
             .append("<img src='https:" + eventimage + "'/>");
         }
-      } else {
       }
 
       // start time
@@ -257,40 +260,41 @@ function displayEvent() {
 
       // add this event's div to the event container
       $("#events-results").append(newEventDiv);
-    }
-  });
+
+    });
 }
 
-$submit.on("click", function(event) {
-  event.preventDefault();
 
-  // clear out current results
-  $hotelsContainer.empty();
+$submit.on("click", function (event) {
+    event.preventDefault();
 
-  // save their inputted data
-  city = $city.val().trim();
-  checkin = $checkInDate.val();
-  checkout = $checkOutDate.val();
-  var citycode = "";
+    // clear out current results
+    $hotelsContainer.empty();
+    $eventsContainer.empty();
 
-  // clear inputs
-  $city.val("");
-  $checkInDate.val("");
-  $checkOutDate.val("");
+    // save their inputted data
+    city = $city.val().trim();
+    checkin = $checkInDate.val();
+    checkout = $checkOutDate.val();
+    var citycode = "";
 
-  // show message that results are being generated - so user knows button did submit
-  if ($(".please-wait").length === 0) {
-    console.log("results are generating....please wait");
-    pleaseWait = $("<p>")
-      .text("Searching for results...")
-      .addClass("please-wait");
-    $(document.body).append(pleaseWait);
-    pleaseWait.insertAfter($submit);
-  }
+    // show message that results are being generated - so user knows button did submit
+    if ($(".please-wait").length === 0) {
+        console.log("results are generating....please wait");
+        pleaseWait = $("<p>").text("Searching for results...").addClass("please-wait");
+        $(document.body).append(pleaseWait);
+        pleaseWait.insertAfter($submit);
+    }
 
-  // get hotel results and display them
-  getHotels();
+    // get hotel results and display them
+    getHotels();
 
-  // get event results and display them
-  displayEvent();
+    // get event results and display them
+    displayEvent();
+
+    // clear inputs
+    $city.val("");
+    $checkInDate.val("");
+    $checkOutDate.val("");
+
 });
