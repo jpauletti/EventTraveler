@@ -1,5 +1,6 @@
 body{
-    background:#f8dcd9;
+    /* background:#f8dcd9; */
+    background: rgb(191, 233, 191);
 }
 #head{
     height: 110px;
@@ -16,7 +17,7 @@ body{
 }
 
 #event-form{
-    width: 1030px;
+    width: 1070px;
     border: 1px solid rgb(209, 144, 144);
     color: black;
     
@@ -33,19 +34,21 @@ body{
 
 
 .nav-wrapper {
-    background-color: rgb(207, 130, 147);
+    /* background-color: rgb(207, 130, 147); */
+    background-color: rgb(7, 119, 7);
     height: 50px;
 }
 
 #banner {
-    width: 1030px;
+    width: 1070px;
 }
 h5 {
     padding-top: 70px;
 }
 
 footer {
-    background-color: rgb(207, 130, 147);
+    /* background-color: rgb(207, 130, 147); */
+    background-color: rgb(7, 119, 7);
     height: 50px;
     text-align: center;
 }
