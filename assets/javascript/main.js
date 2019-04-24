@@ -212,21 +212,26 @@ function displayEvent() {
         .text("see event");
 
       // img container
-      var eventimage = schema.events.event[i].image.medium.url;
-      if (eventimage.includes("http")) {
-        var neweventImage = $("<div>")
-          .addClass("card-image")
-          .append("<img src='" + image + "'/>");
+      if (schema.events.event[i].image !== null) {
+        var eventimage = schema.events.event[i].image.medium.url;
+        if (eventimage.includes("http")) {
+          var neweventImage = $("<div>")
+            .addClass("card-image")
+            .append("<img src='" + eventimage + "'/>");
+        } else {
+          var neweventImage = $("<div>")
+            .addClass("card-image")
+            .append("<img src='https:" + eventimage + "'/>");
+        }
       } else {
-        var neweventImage = $("<div>")
-          .addClass("card-image")
-          .append("<img src='https:" + image + "'/>");
       }
+
       // start time
       var begins = schema.events.event[i].start_time;
       var days = schema.events.event[i].all_day;
       if (begins.includes("00:00:00")) {
-        var startTime = $("<p>").text("days: " + days);
+          var date = begins.splice(11,18);
+        var startTime = $("<p>").text("Starts on " + date + ". Happening for " + days + " days");
       } else {
         var startTime = $("<p>").text(begins);
       }
@@ -247,7 +252,7 @@ function displayEvent() {
       // make parent div for this event
 
       var newEventDiv = $("<div>")
-        .append(eventImage, eventContentContainer)
+        .append(neweventImage, eventContentContainer)
         .addClass("card horizontal");
 
       // add this event's div to the event container

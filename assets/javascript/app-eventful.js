@@ -55,16 +55,17 @@ function displayEvent() {
         .text("see event");
 
       // img container
-      var eventimage = schema.events.event[i].image.medium.url;
-      if (eventimage.includes("http")) {
-        var neweventImage = $("<div>")
-          .addClass("card-image")
-          .append("<img src='" + image + "'/>");
-      } else {
-        var neweventImage = $("<div>")
-          .addClass("card-image")
-          .append("<img src='https:" + image + "'/>");
-      }
+      if (schema.events.event[i].image !== null) {
+        var eventimage = schema.events.event[i].image.medium.url;
+        if (eventimage.includes("http")) {
+          var neweventImage = $("<div>")
+            .addClass("card-image")
+            .append("<img src='" + eventimage + "'/>");
+        } else {
+          var neweventImage = $("<div>")
+            .addClass("card-image")
+            .append("<img src='https:" + eventimage + "'/>");
+        }}else{};
 
       // start time
       var begins = schema.events.event[i].start_time;
