@@ -7,26 +7,29 @@
     <title>Event Traveler</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css "href="assets/css/style.css">
+   
     <script src="https://code.jquery.com/jquery-3.4.0.min.js"integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="crossorigin="anonymous"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
     <script src="assets/javascript/app.js"></script>
+    
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
-
+    
 </head>
 <body>
     <div class="container">
-        <nav>
+        <nav id=“head”>
+    
                 <div class="nav-wrapper">
-                  <a href="#" class="brand-logo">EventTraveler</a>
+                  <img src="assets/images/logo.png" class="brand-logo"></a>
                   <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="sass.html"></a></li>
-                    <li><a href="badges.html"></a></li>
-                    <li><a href="collapsible.html">JavaScript</a></li>
+                    <li id = "trips"><a href=".html"> </a> Trips</li>
+                    <li id = "account"><a href=".html"></a>Account</li>
                   </ul>
                 </div>
               </nav>
-
 <!-- Images -->
 <div class="slider">
         <ul class="slides">
@@ -34,39 +37,92 @@
             <img src="assets/images/beach.png">
       <!-- random image -->
             <div class="caption center-align">
-              <!-- <h3>This is our big Tagline!</h3>
-              <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5> -->
             </div>
           </li>
           <li>
             <img src="assets/images/concert.png"> 
             <!-- random image -->
             <div class="caption left-align">
-              <!-- <h3>Left Aligned Caption</h3>
-              <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5> -->
             </div>
           </li>
           <li>
             <img src="assets/images/mountain.png"> 
             <!-- random image -->
             <div class="caption right-align">
-              <!-- <h3>Right Aligned Caption</h3>
-              <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5> -->
             </div>
           </li>
           <li>
             <img src="assets/images/attraction.png"> 
             <!-- random image -->
             <div class="caption center-align">
-              <!-- <h3>This is our big Tagline!</h3>
-              <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5> -->
             </div>
           </li>
         </ul>
       </div>
-
-
-    </div>
+      <div>
+          <h1>Search for hotels and events</h1>
+      <!-- Create the form -->
+        <form id="event-form">
+          <label for="location-input">Enter city and state</label>
+          <input type="text" id="location-input" /><br />
+          <label for="start-date-input">Check In</label>
+          <input type="date" id="start-date-input" /><br />
+          <label for="end-date-input">Check Out</label>
+          <input type="date" id="end-date-input" /><br />
+          <!-- Button triggers new movie to be added -->
+          <input id="add-event" class="btn btn-info" type="submit" value="Search" />
+        </form>
+        
+        <h5>Save 50% or more when you book with us!</h5>
+        <div class="banner-div">
+          <img src="assets/images/banner.jpg" id= "banner">
+          </div>
+<!-- create cards right -->
+      <div class="row">
+        <div class="col s6" id = "right">
+          <h3 class="header">Hotels</h3>
+          <div id = "hotel-results">
+          <div class="card horizontal">
+            <div class="card-image">
+              <img src="https://lorempixel.com/100/190/nature/6">
+            </div>
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>Address</p>
+              </div>
+              <div class="card-action">
+                <a href="#">Link</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+<!-- create cards right -->
+        <div class="col s6" id = "Left">
+          <h3 class="header">Events</h3>
+          <div class="card horizontal">
+            <div class="card-image">
+              <img src="https://lorempixel.com/100/190/nature/6">
+            </div>
+            <div class="card-stacked">
+              <div class="card-content">
+                  <p>Address</p>
+              </div>
+              <div class="card-action">
+                <a href="#">Link</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class=“page-footer”>
+        <div class=“footer-copyright”>
+          <div class=“container”>
+          © 2019 Los Cinco
+          </div>
+        </div>
+      </footer>
    
 </body>
+
 </html>

@@ -1,17 +1,22 @@
 body{
-    background:#fbe9e7;
+    background:#f8dcd9;
 }
-#right{
-
-    width: 230px;
-
+#head{
+    height: 110px;
+ 
+ }
+ .brand-logo {
+   width: 100px;
+   height: 100px;
+   left: 10px;
 }
+
 #left{
     top: 10%;
   
 }
 #event-form{
-    width: 350px;
+    width: 1030px;
     border: 1px solid rgb(209, 144, 144);
     color: black;
     
@@ -21,4 +26,24 @@ body{
 }
 #trips{
     width: 50px;
+    
+}
+
+
+.nav-wrapper {
+    background-color: rgb(207, 130, 147);
+    height: 50px;
+}
+
+#banner {
+    width: 1030px;
+}
+h5 {
+    padding-top: 70px;
+}
+
+footer {
+    background-color: rgb(207, 130, 147);
+    height: 50px;
+    text-align: center;
 }
