@@ -1,4 +1,5 @@
 var $hotelsContainer = $("#hotel-results");
+var $eventsContainer = $("#events-results");
 
 // input fields
 var $city = $("#location-input");
@@ -15,7 +16,7 @@ var pleaseWait = "";
 // CORS un-blocker for eventful API
 jQuery.ajaxPrefilter(function(options) {
   if (options.crossDomain && jQuery.support.cors) {
-    options.url = "https://cors-anywhere.herokuapp.com/" + options.url;
+      options.url = "https://cors-anywhere.herokuapp.com/" + options.url;
   }
 });
 
@@ -140,7 +141,6 @@ function getHotels() {
           .append(content, action);
 
         // make parent div for this hotel
-        // var newHotelDiv = $("<div>").append(newTitle, newAddress, newPrice, newRating, newImage, newLink).addClass("card-horizontal");
         var newHotelDiv = $("<div>")
           .append(imgContainer, allContentContainer)
           .addClass("card horizontal");
@@ -155,142 +155,155 @@ function getHotels() {
   });
 }
 
+
+
+
+
+
 function displayEvent() {
-  $("#events-results").empty();
 
-  var where = $("#location-input")
-    .val()
-    .trim();
-  //var what = $("#event-input")
-  //.val()
-  //.trim();
-  var start = moment($("#start-date-input").val()).format("YYYYMMDD00");
-  var end = moment($("#end-date-input").val()).format("YYYYMMDD00");
+    $("#events-results").empty();
 
-  // search for button name in omdb and show info underneath
-  var queryURL =
-    "https://api.eventful.com/json/events/search?" +
-    "app_key=n69CWBNZRrGZqdMs" +
-    "&l=" +
-    where +
-    "&t=" +
-    start +
-    "-" +
-    end;
+    var where = $("#location-input")
+        .val()
+        .trim();
 
-  console.log(queryURL);
+    var start = moment($("#start-date-input").val()).format("YYYYMMDD00");
+    var end = moment($("#end-date-input").val()).format("YYYYMMDD00");
 
-  // https://api.eventful.com/json/events/search?app_key=n69CWBNZRrGZqdMs&l=dallas,%20TX&q=music
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  }).then(function(response) {
-    var schema = JSON.parse(response);
-    console.log(schema.events);
-    console.log(schema.events.event);
-    // if no results
-    if (schema.events.event.length === 0) {
-      console.log("no results");
-      var newP = $("<p>").text("No results.");
-      $hotelsContainer.append(newP);
-    }
+    // search for button name in omdb and show info underneath
+    var queryURL =
+        "https://api.eventful.com/json/events/search?" +
+        "app_key=n69CWBNZRrGZqdMs" +
+        "&l=" +
+        where +
+        "&t=" +
+        start +
+        "-" +
+        end;
 
-    for (var i = 0; i < schema.events.event.length; i++) {
-      total = parseFloat(i) + 1;
+    console.log(queryURL);
 
-      //create elements for html
-      var eventTitle = $("<h5>").text(schema.events.event[i].title);
-      var eventAddress = $("<p>").text(
-        schema.events.event[i].venue_address +
-          ", " +
-          schema.events.event[i].city_name +
-          ", " +
-          schema.events.event[i].postal_code
-      );
-      var eventLink = $("<a>")
-        .attr("href", schema.events.event[i].url)
-        .text("see event");
-
-      // img container
-      if (schema.events.event[i].image !== null) {
-        var eventimage = schema.events.event[i].image.medium.url;
-        if (eventimage.includes("http")) {
-          var neweventImage = $("<div>")
-            .addClass("card-image")
-            .append("<img src='" + eventimage + "'/>");
-        } else {
-          var neweventImage = $("<div>")
-            .addClass("card-image")
-            .append("<img src='https:" + eventimage + "'/>");
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function(response) {
+        var schema = JSON.parse(response);
+        console.log(schema.events);
+        console.log(schema.events.event);
+        // if no results
+        if (schema.events.event.length === 0) {
+            console.log("no results");
+            var newP = $("<p>").text("No results.");
+            $eventsContainer.append(newP);
         }
-      } else {
-      }
 
-      // start time
-      var begins = schema.events.event[i].start_time;
-      var days = schema.events.event[i].all_day;
-      if (begins.includes("00:00:00")) {
-          var date = begins.splice(11,18);
-        var startTime = $("<p>").text("Starts on " + date + ". Happening for " + days + " days");
-      } else {
-        var startTime = $("<p>").text(begins);
-      }
+        for (var i = 0; i < schema.events.event.length; i++) {
+            total = parseFloat(i) + 1;
 
-      //build container
-      var eventContent = $("<div>")
-        .addClass("card-content")
-        .append(eventTitle, eventAddress, startTime);
-      var eventAction = $("<div>")
-        .addClass("card-action")
-        .append(eventLink);
+            //create elements for html
+            var eventTitle = $("<h5>").text(schema.events.event[i].title);
+            var eventAddress = $("<p>").text(
+                schema.events.event[i].venue_address +
+                ", " +
+                schema.events.event[i].city_name +
+                ", " +
+                schema.events.event[i].postal_code
+            );
+            var eventLink = $("<a>")
+                .attr("href", schema.events.event[i].url)
+                .text("see event");
 
-      // content container
-      var eventContentContainer = $("<div>")
-        .addClass("card-stacked")
-        .append(eventContent, eventAction);
+            // img container
+            if (schema.events.event[i].image !== null) {
+                var eventimage = schema.events.event[i].image.medium.url;
+                if (eventimage.includes("http")) {
+                    var neweventImage = $("<div>")
+                        .addClass("card-image")
+                        .append("<img src='" + eventimage + "'/>");
+                } else {
+                    var neweventImage = $("<div>")
+                        .addClass("card-image")
+                        .append("<img src='https:" + eventimage + "'/>");
+                }
+            }
 
-      // make parent div for this event
+            // start time
+            var begins = schema.events.event[i].start_time;
+            var days = schema.events.event[i].all_day;
+            if (begins.includes("00:00:00")) {
+                var date = begins.splice(11,18);
+                var startTime = $("<p>").text("Starts on " + date + ". Happening for " + days + " days");
+            } else {
+                var startTime = $("<p>").text(begins);
+            }
 
-      var newEventDiv = $("<div>")
-        .append(neweventImage, eventContentContainer)
-        .addClass("card horizontal");
+            //build container
+            var eventContent = $("<div>")
+                .addClass("card-content")
+                .append(eventTitle, eventAddress, startTime);
+            var eventAction = $("<div>")
+                .addClass("card-action")
+                .append(eventLink);
 
-      // add this event's div to the event container
-      $("#events-results").append(newEventDiv);
-    }
-  });
+            // content container
+            var eventContentContainer = $("<div>")
+                .addClass("card-stacked")
+                .append(eventContent, eventAction);
+
+            // make parent div for this event
+            var newEventDiv = $("<div>")
+                .append(neweventImage, eventContentContainer)
+                .addClass("card horizontal");
+
+            // add this event's div to the event container
+            $("#events-results").append(newEventDiv);
+        
+        }
+
+    })
 }
 
-$submit.on("click", function(event) {
-  event.preventDefault();
 
-  // clear out current results
-  $hotelsContainer.empty();
+$submit.on("click", function (event) {
+    event.preventDefault();
 
-  // save their inputted data
-  city = $city.val().trim();
-  checkin = $checkInDate.val();
-  checkout = $checkOutDate.val();
-  var citycode = "";
+    // clear out current results
+    $hotelsContainer.empty();
+    $eventsContainer.empty();
 
-  // clear inputs
-  $city.val("");
-  $checkInDate.val("");
-  $checkOutDate.val("");
+    // save their inputted data
+    city = $city.val().trim();
+    checkin = $checkInDate.val();
+    checkout = $checkOutDate.val();
+    var citycode = "";
 
-  // show message that results are being generated - so user knows button did submit
-  if ($(".please-wait").length === 0) {
-    console.log("results are generating....please wait");
-    pleaseWait = $("<p>")
-      .text("Searching for results...")
-      .addClass("please-wait");
-    $(document.body).append(pleaseWait);
-    pleaseWait.insertAfter($submit);
-  }
+    // if user filled out all fields
+    if (city !== "" && checkin !== "" && checkout !== "") {
+        // show message that results are being generated - so user knows button did submit
+        if ($(".please-wait").length === 0) {
+            console.log("results are generating....please wait");
+            pleaseWait = $("<p>").text("Searching for results...").addClass("please-wait");
+            $(document.body).append(pleaseWait);
+            pleaseWait.insertAfter($submit);
+        }
 
-  // get hotel results and display them
-  getHotels();
+        // get hotel results and display them
+        getHotels();
 
-  // get event results and display them
-  displayEvent();
+        // get event results and display them
+        displayEvent();
+
+        // clear inputs
+        $city.val("");
+        $checkInDate.val("");
+        $checkOutDate.val("");
+    } else {
+        // show error message
+        if ($(".required-error").length === 0) {
+            var required = $("<p>").text("* All fields are required").addClass("required-error");
+            $("#event-form").prepend(required);
+        }
+    }
+
 });
