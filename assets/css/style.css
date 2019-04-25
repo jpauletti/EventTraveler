@@ -1,7 +1,10 @@
 body{
     background:#f8dcd9;
 }
+<<<<<<< HEAD
 /*<<<<<<< HEAD*/
+=======
+>>>>>>> 26bd9e02346a1a6ed0fc50de5c2ba079b60395ae
 #head{
     height: 110px;
  
@@ -10,6 +13,7 @@ body{
    width: 100px;
    height: 100px;
    left: 10px;
+<<<<<<< HEAD
 /*=======*/
 
 #right{
@@ -17,6 +21,8 @@ body{
     width: 230px;
 
 /*>>>>>>> fdb8418d9c8163ebd5ea6defc88d74b7f0e6d8be*/
+=======
+>>>>>>> 26bd9e02346a1a6ed0fc50de5c2ba079b60395ae
 }
 
 #left{
@@ -36,7 +42,10 @@ body{
 
 #trips{
     width: 50px;
+<<<<<<< HEAD
 /*<<<<<<< HEAD*/
+=======
+>>>>>>> 26bd9e02346a1a6ed0fc50de5c2ba079b60395ae
     
 }
 
@@ -58,7 +67,10 @@ footer {
     height: 50px;
     text-align: center;
 }
+<<<<<<< HEAD
 /*=======*/
 
 }
 /*>>>>>>> fdb8418d9c8163ebd5ea6defc88d74b7f0e6d8be*/
+=======
+>>>>>>> 26bd9e02346a1a6ed0fc50de5c2ba079b60395ae
