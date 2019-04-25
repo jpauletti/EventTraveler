@@ -1,26 +1,24 @@
 body{
-    /* background:#f8dcd9; */
-    background: rgb(191, 233, 191);
-}
-#head{
-    height: 110px;
- 
- }
- .brand-logo {
-   width: 100px;
-   height: 100px;
-   left: 10px;
+    background: rgb(226, 224, 224);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
+#head{
+    height: 250px;
+ }
+
+ .brand-logo {
+   width: 150px;
+   height: 90px;
+}
 #left{
     top: 10%;
 }
 
 #event-form{
     width: 1070px;
-    border: 1px solid rgb(209, 144, 144);
-    color: black;
-    
+    border: 1px solid #777777;
+    color: black;  
 }
 
 .slides{
@@ -28,27 +26,28 @@ body{
 }
 
 #trips{
-    width: 50px;
-    
+    width: 50px;   
 }
 
-
 .nav-wrapper {
-    /* background-color: rgb(207, 130, 147); */
-    background-color: rgb(7, 119, 7);
-    height: 50px;
+    background-color: rgb(137, 137, 146);   
 }
 
 #banner {
     width: 1070px;
 }
+
 h5 {
     padding-top: 70px;
 }
 
 footer {
-    /* background-color: rgb(207, 130, 147); */
-    background-color: rgb(7, 119, 7);
+    background-color: rgb(137, 137, 146);
     height: 50px;
     text-align: center;
+}
+
+#location, #checkin, #checkout{
+    color: black;
+    font-size: 1em;
 }
