@@ -1,10 +1,7 @@
 body{
-    background:#f8dcd9;
+    /* background:#f8dcd9; */
+    background: rgb(191, 233, 191);
 }
-<<<<<<< HEAD
-/*<<<<<<< HEAD*/
-=======
->>>>>>> 26bd9e02346a1a6ed0fc50de5c2ba079b60395ae
 #head{
     height: 110px;
  
@@ -13,16 +10,6 @@ body{
    width: 100px;
    height: 100px;
    left: 10px;
-<<<<<<< HEAD
-/*=======*/
-
-#right{
-
-    width: 230px;
-
-/*>>>>>>> fdb8418d9c8163ebd5ea6defc88d74b7f0e6d8be*/
-=======
->>>>>>> 26bd9e02346a1a6ed0fc50de5c2ba079b60395ae
 }
 
 #left{
@@ -30,7 +17,7 @@ body{
 }
 
 #event-form{
-    width: 1030px;
+    width: 1070px;
     border: 1px solid rgb(209, 144, 144);
     color: black;
     
@@ -42,35 +29,26 @@ body{
 
 #trips{
     width: 50px;
-<<<<<<< HEAD
-/*<<<<<<< HEAD*/
-=======
->>>>>>> 26bd9e02346a1a6ed0fc50de5c2ba079b60395ae
     
 }
 
 
 .nav-wrapper {
-    background-color: rgb(207, 130, 147);
+    /* background-color: rgb(207, 130, 147); */
+    background-color: rgb(7, 119, 7);
     height: 50px;
 }
 
 #banner {
-    width: 1030px;
+    width: 1070px;
 }
 h5 {
     padding-top: 70px;
 }
 
 footer {
-    background-color: rgb(207, 130, 147);
+    /* background-color: rgb(207, 130, 147); */
+    background-color: rgb(7, 119, 7);
     height: 50px;
     text-align: center;
 }
-<<<<<<< HEAD
-/*=======*/
-
-}
-/*>>>>>>> fdb8418d9c8163ebd5ea6defc88d74b7f0e6d8be*/
-=======
->>>>>>> 26bd9e02346a1a6ed0fc50de5c2ba079b60395ae
