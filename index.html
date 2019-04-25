@@ -4,82 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Event Traveler</title>
+    <title>EventTraveler</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css "href="assets/css/style.css">
-   
-    <script src="https://code.jquery.com/jquery-3.4.0.min.js"integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="crossorigin="anonymous"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    
-    <script src="assets/javascript/app.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
-    
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    
-
+     
 </head>
 <body>
     <div class="container">
-        <nav id=“head”>
-    
+        <nav id="head">
+              <!--Creating NavBar-->
                 <div class="nav-wrapper">
-                  <img src="assets/images/logo.png" class="brand-logo"></a>
+                  <img src="assets/images/logo2.png" class="brand-logo">
                   <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li id = "trips"><a href=".html"> </a> Trips</li>
+                    <li id = "trips"><a href=".html"> </a>Trips</li>
                     <li id = "account"><a href=".html"></a>Account</li>
                   </ul>
                 </div>
-              </nav>
-<!-- Images -->
+        </nav>
+<!-- Slider Images -->
 <div class="slider">
         <ul class="slides">
           <li>
             <img src="assets/images/beach.png">
-      <!-- random image -->
-            <div class="caption center-align">
-            </div>
           </li>
           <li>
             <img src="assets/images/concert.png"> 
-            <!-- random image -->
-            <div class="caption left-align">
-            </div>
           </li>
           <li>
             <img src="assets/images/mountain.png"> 
-            <!-- random image -->
-            <div class="caption right-align">
-            </div>
           </li>
           <li>
             <img src="assets/images/attraction.png"> 
-            <!-- random image -->
-            <div class="caption center-align">
-            </div>
           </li>
         </ul>
-      </div>
+</div>
+      
       <div>
           <h1>Search for hotels and events</h1>
       <!-- Create the form -->
         <form id="event-form">
-          <label for="location-input">Enter city and state</label>
+          <label for="location-input" id="location">Enter city and state</label>
           <input type="text" id="location-input" /><br />
-          <label for="start-date-input">Check In</label>
+          <label for="start-date-input" id="checkin">Check In</label>
           <input type="date" id="start-date-input" /><br />
-          <label for="end-date-input">Check Out</label>
+          <label for="end-date-input" id="checkout">Check Out</label>
           <input type="date" id="end-date-input" /><br />
-          <!-- Button triggers new movie to be added -->
+          <!-- Button triggers new event to be added -->
           <input id="add-event" class="btn btn-info" type="submit" value="Search" />
         </form>
-        
-        <h5>Save 50% or more when you book with us!</h5>
+     </div>
+        <h5></h5>
         <div class="banner-div">
           <img src="assets/images/banner.jpg" id= "banner">
-          </div>
+        </div>
 <!-- create cards right -->
       <div class="row">
         <div class="col s6" id = "right">
@@ -87,7 +65,7 @@
           <div id = "hotel-results">
           <div class="card horizontal">
             <div class="card-image">
-              <img src="https://lorempixel.com/100/190/nature/6">
+              <img src="assets/images/hotels.jpg">
             </div>
             <div class="card-stacked">
               <div class="card-content">
@@ -99,36 +77,41 @@
             </div>
           </div>
         </div>
+        </div>
 <!-- create cards right -->
         <div class="col s6" id = "Left">
           <h3 class="header">Events</h3>
           <div id="events-results">
-            <div class="card horizontal">
-              <div class="card-image">
-                <img src="https://lorempixel.com/100/190/nature/6">
+          <div class="card horizontal">
+            <div class="card-image">
+              <img src="assets/images/events.jpg">
+            </div>
+            <div class="card-stacked">
+              <div class="card-content">
+                  <p>Address</p>
               </div>
-              <div class="card-stacked">
-                <div class="card-content">
-                    <p>Address</p>
-                </div>
-                <div class="card-action">
-                  <a href="#">Link</a>
-                </div>
+              <div class="card-action">
+                <a href="#">Link</a>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <footer class=“page-footer”>
-        <div class=“footer-copyright”>
-          <div class=“container”>
+    </div>
+      <footer class="page-footer">
+        <div class="footer-copyright">
+          <div class="container">
           © 2019 Los Cinco
           </div>
         </div>
       </footer>
-   
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+      </div>
+  
+  
+  <script src="https://code.jquery.com/jquery-3.4.0.min.js"integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="assets/javascript/app.js"></script>
   <script src="assets/javascript/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 </body>
-
 </html>
