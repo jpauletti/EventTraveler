@@ -1,3 +1,9 @@
+// slider functionality
+$(document).ready(function () {
+    $('.slider').slider({ full_width: true });
+});
+
+
 var $hotelsContainer = $("#hotel-results");
 var $eventsContainer = $("#events-results");
 
@@ -195,7 +201,7 @@ function displayEvent() {
         console.log(schema.events.event);
         // if no results
         if (schema.events.event.length === 0) {
-            console.log("no results");
+            console.log("no event results");
             var newP = $("<p>").text("No results.");
             $eventsContainer.append(newP);
         }
