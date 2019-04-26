@@ -1,3 +1,15 @@
+var config = {
+    apiKey: "AIzaSyCzaNmYb94HQPR70d6Omy5kP1d0kw5NLkc",
+    authDomain: "eventtraveler-69f59.firebaseapp.com",
+    databaseURL: "https://eventtraveler-69f59.firebaseio.com",
+    projectId: "eventtraveler-69f59",
+    storageBucket: "eventtraveler-69f59.appspot.com",
+    messagingSenderId: "73086206077"
+};
+
+firebase.initializeApp(config);
+
+var database = firebase.database();
 // slider functionality
 $(document).ready(function () {
     $('.slider').slider({ full_width: true });
@@ -21,150 +33,143 @@ var pleaseWait = "";
 
 
 // CORS un-blocker for eventful API
-jQuery.ajaxPrefilter(function(options) {
-  if (options.crossDomain && jQuery.support.cors) {
-      options.url = "https://cors-anywhere.herokuapp.com/" + options.url;
-  }
+jQuery.ajaxPrefilter(function (options) {
+    if (options.crossDomain && jQuery.support.cors) {
+        options.url = "https://cors-anywhere.herokuapp.com/" + options.url;
+    }
 });
 
-function getHotels() {
-  // find location code
-  $.ajax({
-    url:
-      "https://apidojo-kayak-v1.p.rapidapi.com/locations/search?where=" + city,
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Host": "apidojo-kayak-v1.p.rapidapi.com",
-      "X-RapidAPI-Key": "811b0b509bmshf44ab7ab1214e55p19e182jsnc61a98a0c578"
-    }
-  }).then(function(response) {
-    console.log(response);
-    console.log(response[0].ctid); // MAKE SURE IT'S A CITY
-
-    // make sure it's a city (response returns city and airport codes)
-    $.each(response, function(i, value) {
-      if (response[i].loctype === "city") {
-        console.log("this is a city");
-        console.log(i + ", " + value);
-        citycode = response[i].ctid;
-        console.log(citycode);
-        return false;
-      }
-    });
-
-    // now that we have the location code, we can use it to find hotels
+function getHotels(city) {
+    // find location code
     $.ajax({
-      url:
-        "https://apidojo-kayak-v1.p.rapidapi.com/hotels/create-session?rooms=1&citycode=" +
-        citycode +
-        "&checkin=" +
-        checkin +
-        "&checkout=" +
-        checkout +
-        "&adults=1",
-      method: "GET",
-      headers: {
-        "X-RapidAPI-Host": "apidojo-kayak-v1.p.rapidapi.com",
-        "X-RapidAPI-Key": "811b0b509bmshf44ab7ab1214e55p19e182jsnc61a98a0c578"
-      }
-    }).then(function(response) {
-      console.log("kajak success");
-      console.log(response);
-      console.log(response.hotelset);
-
-      // reference for hotel list
-      var hotelListMain = response.hotelset;
-      var hotelList = response.hotelset;
-      // only keep 10 results
-      if (hotelList.length > 10) {
-        hotelList.length = 10;
-      }
-
-      console.log(hotelList);
-
-      // if no results
-      if (hotelList.length === 0) {
-        console.log("no results");
-        var newP = $("<p>").text("No results.");
-        $hotelsContainer.append(newP);
-      }
-
-      // go through each hotel and show on page
-      $.each(hotelList, function(i, value) {
-        console.log("hotel " + i);
-
-        // get relevent info
-        if (response.hotelset[i].brand !== undefined) {
-            var hotelName = response.hotelset[i].brand;
-        } else {
-            var hotelName = response.hotelset[i].name;
+        url:
+            "https://apidojo-kayak-v1.p.rapidapi.com/locations/search?where=" + city,
+        method: "GET",
+        headers: {
+            "X-RapidAPI-Host": "apidojo-kayak-v1.p.rapidapi.com",
+            "X-RapidAPI-Key": "e5eec4b95fmshe2d8dd40775feafp178082jsnb4a20cea3e50"
         }
-        var hotelAddress = response.hotelset[i].displayaddress;
-        var hotelRating = response.hotelset[i].ratinglabel;
-        var hotelStarCount = response.hotelset[i].stars;
-        var hotelThumbnail =
-          "https://kayak.com" + response.hotelset[i].thumburl;
+    }).then(function (response) {
 
-        // if cheapest provider object is included
-        console.log("t/f: " + response.hotelset[i].cheapestProvider !== undefined);
+        // make sure it's a city (response returns city and airport codes)
+        $.each(response, function (i, value) {
+            if (response[i].loctype === "city") {
+                citycode = response[i].ctid;
+                return false;
+            }
+        });
 
-        if (response.hotelset[i].cheapestProvider !== undefined) {
-          var cheapestProviderName = response.hotelset[i].cheapestProvider.name;
-          var bestPrice =
-            response.hotelset[i].cheapestProvider.displaybaseprice;
-          var linkToHotel =
-            "https://kayak.com" + response.hotelset[i].cheapestProvider.url;
-        } else {
-          var cheapestProviderName = response.hotelset[i].brand;
-          var bestPrice = response.hotelset[i].price;
-          var linkToHotel = "https://kayak.com" + response.hotelset[i].shareURL;
-        }
+        // now that we have the location code, we can use it to find hotels
+        $.ajax({
+            url:
+                "https://apidojo-kayak-v1.p.rapidapi.com/hotels/create-session?rooms=1&citycode=" +
+                citycode +
+                "&checkin=" +
+                checkin +
+                "&checkout=" +
+                checkout +
+                "&adults=1",
+            method: "GET",
+            headers: {
+                "X-RapidAPI-Host": "apidojo-kayak-v1.p.rapidapi.com",
+                "X-RapidAPI-Key": "e5eec4b95fmshe2d8dd40775feafp178082jsnb4a20cea3e50"
+            }
+        }).then(function (response) {
+            console.log("kajak returned");
 
-        //create elements for html
-        var newTitle = $("<h5>").text(
-          hotelName + " (via " + cheapestProviderName + ")"
-        );
-        var newAddress = $("<p>").text(hotelAddress);
-        var newPrice = $("<p>").text(bestPrice);
-        var newRating = $("<p>").text(
-          hotelRating + ", " + hotelStarCount + " stars"
-        );
-        var newImage = $("<img>").attr("src", hotelThumbnail);
-        var newLink = $("<a>")
-          .attr("href", linkToHotel)
-          .text("see hotel");
+            // reference for hotel list
+            var hotelListMain = response.hotelset;
+            var hotelList = response.hotelset;
+            // only keep 10 results
+            if (hotelList.length > 10) {
+                hotelList.length = 10;
+            }
 
-        // img container
-        var imgContainer = $("<div>")
-          .addClass("card-image")
-          .append(newImage);
 
-        var content = $("<div>")
-          .addClass("card-content")
-          .append(newTitle, newAddress, newPrice, newRating);
-        var action = $("<div>")
-          .addClass("card-action")
-          .append(newLink);
+            // if no results
+            if (hotelList.length === 0) {
+                var newP = $("<p>").text("No results.");
+                $hotelsContainer.append(newP);
 
-        // content container
-        var allContentContainer = $("<div>")
-          .addClass("card-stacked")
-          .append(content, action);
+                // remove wait message
+                pleaseWait.remove();
+            }
 
-        // make parent div for this hotel
-        var newHotelDiv = $("<div>")
-          .append(imgContainer, allContentContainer)
-          .addClass("card horizontal");
+            // go through each hotel and show on page
+            $.each(hotelList, function (i, value) {
 
-        // add this hotel's div to the hotel container
-        $hotelsContainer.append(newHotelDiv);
+                // get relevent info
+                if (response.hotelset[i].brand !== undefined) {
+                    var hotelName = response.hotelset[i].brand;
+                } else {
+                    var hotelName = response.hotelset[i].name;
+                }
+                var hotelAddress = response.hotelset[i].displayaddress;
+                var hotelRating = response.hotelset[i].ratinglabel;
+                var hotelStarCount = response.hotelset[i].stars;
+                var hotelThumbnail =
+                    "https://kayak.com" + response.hotelset[i].thumburl;
 
-        // remove wait message
-        pleaseWait.remove();
+                // if cheapest provider object is included
+                console.log("t/f: " + response.hotelset[i].cheapestProvider !== undefined);
 
-      });
+                if (response.hotelset[i].cheapestProvider !== undefined) {
+                    var cheapestProviderName = response.hotelset[i].cheapestProvider.name;
+                    var bestPrice =
+                        response.hotelset[i].cheapestProvider.displaybaseprice;
+                    var linkToHotel =
+                        "https://kayak.com" + response.hotelset[i].cheapestProvider.url;
+                } else {
+                    var cheapestProviderName = response.hotelset[i].brand;
+                    var bestPrice = response.hotelset[i].price;
+                    var linkToHotel = "https://kayak.com" + response.hotelset[i].shareURL;
+                }
+
+                //create elements for html
+                var newTitle = $("<h5>").text(
+                    hotelName + " (via " + cheapestProviderName + ")"
+                );
+                var newAddress = $("<p>").text(hotelAddress);
+                var newPrice = $("<p>").text(bestPrice);
+                var newRating = $("<p>").text(
+                    hotelRating + ", " + hotelStarCount + " stars"
+                );
+                var newImage = $("<img>").attr("src", hotelThumbnail);
+                var newLink = $("<a>")
+                    .attr("href", linkToHotel)
+                    .text("see hotel");
+
+                // img container
+                var imgContainer = $("<div>")
+                    .addClass("card-image")
+                    .append(newImage);
+
+                var content = $("<div>")
+                    .addClass("card-content")
+                    .append(newTitle, newAddress, newPrice, newRating);
+                var action = $("<div>")
+                    .addClass("card-action")
+                    .append(newLink);
+
+                // content container
+                var allContentContainer = $("<div>")
+                    .addClass("card-stacked")
+                    .append(content, action);
+
+                // make parent div for this hotel
+                var newHotelDiv = $("<div>")
+                    .append(imgContainer, allContentContainer)
+                    .addClass("card horizontal");
+
+                // add this hotel's div to the hotel container
+                $hotelsContainer.append(newHotelDiv);
+
+                // remove wait message
+                pleaseWait.remove();
+
+            });
+        });
     });
-  });
 }
 
 
@@ -190,15 +195,13 @@ function displayEvent() {
         "-" +
         end;
 
-    console.log(queryURL);
 
     $.ajax({
         url: queryURL,
         method: "GET"
-    }).then(function(response) {
+    }).then(function (response) {
         var schema = JSON.parse(response);
-        console.log(schema.events);
-        console.log(schema.events.event);
+
         // if no results
         if (schema.events.event.length === 0) {
             console.log("no event results");
@@ -292,17 +295,48 @@ $submit.on("click", function (event) {
     if (city !== "" && checkin !== "" && checkout !== "") {
         // show message that results are being generated - so user knows button did submit
         if ($(".please-wait").length === 0) {
-            console.log("results are generating....please wait");
             pleaseWait = $("<p>").text("Searching for results...").addClass("please-wait");
             $(document.body).append(pleaseWait);
             pleaseWait.insertAfter($submit);
         }
 
         // get hotel results and display them
-        getHotels();
+        //getHotels();
 
         // get event results and display them
-        displayEvent();
+        //displayEvent();
+
+        // construct object literal for firebase
+        let travelEvent = {
+            city,
+            checkin,
+            checkout
+        };
+
+        // add event to firebase
+        database.ref().push(travelEvent)
+
+        database.ref().limitToLast(5).on("value", snapshot => {
+            let keys = Object.keys(snapshot.val())
+
+            let recentSearchesDiv = $('#recentSearches');
+            recentSearchesDiv.empty();
+
+            for (let i = 0; i < keys.length; i++) {
+                let val = snapshot.val()[keys[i]]
+                let city = val.city
+                let checkin = val.checkin
+                let checkout = val.checkout
+
+                let search = $(`<div><span>City: ${city} </span><span>Check-in: ${checkin} </span><span>Check-out: ${checkout}</span></div>`);
+                search.addClass('recentSearch')
+                search.on('click', function () {
+
+                })
+
+                recentSearchesDiv.append(search)
+            }
+        });
 
         // clear inputs
         $city.val("");
