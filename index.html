@@ -16,13 +16,10 @@
               <!--Creating NavBar-->
                 <div class="nav-wrapper">
                   <img src="assets/images/logo2.png" class="brand-logo">
-                  <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li id = "trips"><a href=".html"> </a>Trips</li>
-                    <li id = "account"><a href=".html"></a>Account</li>
-                  </ul>
                 </div>
-        </nav>
+        </nav> 
 <!-- Slider Images -->
+<div id="slider-container">
 <div class="slider">
         <ul class="slides">
           <li>
@@ -39,10 +36,12 @@
           </li>
         </ul>
 </div>
+</div>
 
       
       <div>
           <h1>Search for hotels and events</h1>
+
       <!-- Create the form -->
         <form id="event-form">
           <label for="location-input" id="location">Enter city and state</label>
@@ -55,7 +54,14 @@
           <input id="add-event" class="btn btn-info" type="submit" value="Search" />
         </form>
      </div>
-        <h5></h5>
+
+     <div>
+       <h4>Recent Searches</h4>
+       <div id="recentSearches">
+       </div>
+     </div>
+
+    
         <div class="banner-div">
           <img src="assets/images/banner.jpg" id= "banner">
         </div>
@@ -70,10 +76,7 @@
             </div>
             <div class="card-stacked">
               <div class="card-content">
-                <p>Address</p>
-              </div>
-              <div class="card-action">
-                <a href="#">Link</a>
+                <p>Use the search form above to see results</p>
               </div>
             </div>
           </div>
@@ -89,10 +92,7 @@
             </div>
             <div class="card-stacked">
               <div class="card-content">
-                  <p>Address</p>
-              </div>
-              <div class="card-action">
-                <a href="#">Link</a>
+                  <p>Use the search form above to see results</p>
               </div>
             </div>
           </div>
@@ -111,7 +111,6 @@
   
   <script src="https://code.jquery.com/jquery-3.4.0.min.js"integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="assets/javascript/app.js"></script>
   <script src="assets/javascript/main.js"></script>
   <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 
