@@ -87,6 +87,9 @@ function getHotels() {
         console.log("no results");
         var newP = $("<p>").text("No results.");
         $hotelsContainer.append(newP);
+
+        // remove wait message
+        pleaseWait.remove();
       }
 
       // go through each hotel and show on page
