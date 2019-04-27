@@ -10,6 +10,7 @@ var config = {
 firebase.initializeApp(config);
 
 var database = firebase.database();
+
 // slider functionality
 $(document).ready(function () {
     $('.slider').slider({ full_width: true });
@@ -124,9 +125,16 @@ function getHotels() {
                 }
 
                 //create elements for html
-                var newTitle = $("<h5>").text(
-                    hotelName + " (via " + cheapestProviderName + ")"
-                );
+                if (hotelName === cheapestProviderName) {
+                    var newTitle = $("<h5>").text(
+                        hotelName
+                    );
+                } else {
+                    var newTitle = $("<h5>").text(
+                        hotelName + " (via " + cheapestProviderName + ")"
+                    );
+                }
+                
                 var newAddress = $("<p>").text(hotelAddress);
                 var newPrice = $("<p>").text(bestPrice);
                 var newRating = $("<p>").text(
@@ -290,7 +298,7 @@ database.ref().limitToLast(5).on("value", snapshot => {
 
         })
 
-        recentSearchesDiv.append(search)
+        recentSearchesDiv.prepend(search)
     }
 });
 
