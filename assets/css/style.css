@@ -56,3 +56,7 @@ footer {
 .please-wait {
     color: rgb(34, 131, 34);
 }
+
+.recent {
+    color: inherit;
+}

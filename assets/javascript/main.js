@@ -39,7 +39,7 @@ jQuery.ajaxPrefilter(function (options) {
     }
 });
 
-function getHotels(city) {
+function getHotels() {
     // find location code
     $.ajax({
         url:
@@ -111,8 +111,6 @@ function getHotels(city) {
                     "https://kayak.com" + response.hotelset[i].thumburl;
 
                 // if cheapest provider object is included
-                console.log("t/f: " + response.hotelset[i].cheapestProvider !== undefined);
-
                 if (response.hotelset[i].cheapestProvider !== undefined) {
                     var cheapestProviderName = response.hotelset[i].cheapestProvider.name;
                     var bestPrice =
@@ -202,13 +200,6 @@ function displayEvent() {
     }).then(function (response) {
         var schema = JSON.parse(response);
 
-        // if no results
-        if (schema.events.event.length === 0) {
-            console.log("no event results");
-            var newP = $("<p>").text("No results.");
-            $eventsContainer.append(newP);
-        }
-
         for (var i = 0; i < schema.events.event.length; i++) {
             total = parseFloat(i) + 1;
 
@@ -278,12 +269,70 @@ function displayEvent() {
 }
 
 
-$submit.on("click", function (event) {
+
+
+// pull in recent searches
+database.ref().limitToLast(5).on("value", snapshot => {
+    let keys = Object.keys(snapshot.val())
+
+    let recentSearchesDiv = $('#recentSearches');
+    recentSearchesDiv.empty();
+
+    for (let i = 0; i < keys.length; i++) {
+        let val = snapshot.val()[keys[i]]
+        let city = val.city
+        let checkin = val.checkin
+        let checkout = val.checkout
+
+        let search = $(`<div><a href="#" class="recent"><span style="font-weight:bold">City:</span> <span style="font-weight:bold">${city}</span> Check-in: <span>${checkin}</span> Check-out: <span>${checkout}</span></a></div>`);
+        search.addClass('recentSearch')
+        search.on('click', function () {
+
+        })
+
+        recentSearchesDiv.append(search)
+    }
+});
+
+
+
+// when clicked, search it again
+$(document).on("click", ".recentSearch", function (event) {
+
     event.preventDefault();
 
     // clear out current results
     $hotelsContainer.empty();
     $eventsContainer.empty();
+
+    // pull data to run it
+    city = $(this).children().children()[1].innerHTML;
+    checkin = $(this).children().children()[2].innerHTML;
+    checkout = $(this).children().children()[3].innerHTML;
+    var citycode = "";
+
+    // show message that results are being generated - so user knows button did submit
+    if ($(".please-wait").length === 0) {
+        pleaseWait = $("<p>").text("Searching for results...").addClass("please-wait");
+        $(document.body).append(pleaseWait);
+        pleaseWait.insertAfter($submit);
+    }
+
+    // get hotel results and display them
+    getHotels();
+
+    // get event results and display them
+    displayEvent();
+
+})
+
+
+
+
+
+
+$submit.on("click", function (event) {
+    event.preventDefault();
 
     // save their inputted data
     city = $city.val().trim();
@@ -293,6 +342,11 @@ $submit.on("click", function (event) {
 
     // if user filled out all fields
     if (city !== "" && checkin !== "" && checkout !== "") {
+
+        // clear out current results
+        $hotelsContainer.empty();
+        $eventsContainer.empty();
+
         // show message that results are being generated - so user knows button did submit
         if ($(".please-wait").length === 0) {
             pleaseWait = $("<p>").text("Searching for results...").addClass("please-wait");
@@ -301,10 +355,10 @@ $submit.on("click", function (event) {
         }
 
         // get hotel results and display them
-        //getHotels();
+        getHotels();
 
         // get event results and display them
-        //displayEvent();
+        displayEvent();
 
         // construct object literal for firebase
         let travelEvent = {
@@ -315,28 +369,6 @@ $submit.on("click", function (event) {
 
         // add event to firebase
         database.ref().push(travelEvent)
-
-        database.ref().limitToLast(5).on("value", snapshot => {
-            let keys = Object.keys(snapshot.val())
-
-            let recentSearchesDiv = $('#recentSearches');
-            recentSearchesDiv.empty();
-
-            for (let i = 0; i < keys.length; i++) {
-                let val = snapshot.val()[keys[i]]
-                let city = val.city
-                let checkin = val.checkin
-                let checkout = val.checkout
-
-                let search = $(`<div><span>City: ${city} </span><span>Check-in: ${checkin} </span><span>Check-out: ${checkout}</span></div>`);
-                search.addClass('recentSearch')
-                search.on('click', function () {
-
-                })
-
-                recentSearchesDiv.append(search)
-            }
-        });
 
         // clear inputs
         $city.val("");
