@@ -334,10 +334,6 @@ $(document).on("click", ".recentSearch", function (event) {
 $submit.on("click", function (event) {
     event.preventDefault();
 
-    // clear out current results
-    $hotelsContainer.empty();
-    $eventsContainer.empty();
-
     // save their inputted data
     city = $city.val().trim();
     checkin = $checkInDate.val();
@@ -346,6 +342,11 @@ $submit.on("click", function (event) {
 
     // if user filled out all fields
     if (city !== "" && checkin !== "" && checkout !== "") {
+
+        // clear out current results
+        $hotelsContainer.empty();
+        $eventsContainer.empty();
+
         // show message that results are being generated - so user knows button did submit
         if ($(".please-wait").length === 0) {
             pleaseWait = $("<p>").text("Searching for results...").addClass("please-wait");
